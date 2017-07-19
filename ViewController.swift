@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var cookiejar:CookieController?
     
     @IBOutlet weak var shortbreadCookies: UILabel!
   
@@ -23,6 +24,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        cookiejar = CookieController()
+        refreshUI()
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,15 +34,33 @@ class ViewController: UIViewController {
     }
     
     @IBAction func ShortbreadCookies(_ sender: Any) {
+        cookiejar?.addShortbreadCookie()
+        refreshUI()
     }
     
     @IBAction func ChocolateChipCookies(_ sender: Any) {
+        cookiejar?.addChocolateChipCookie()
+        refreshUI()
     }
     
     @IBAction func GingerbreadCookies(_ sender: Any) {
+        cookiejar?.addGingerbreadCookie()
+        refreshUI()
     }
 
     @IBAction func onClearAllCookies(_ sender: Any) {
+        cookiejar?.reset()
+        refreshUI()
+    }
+    private func refreshUI() -> Void {
+        let totalGinger = cookiejar!.gingerbreadCookies!.count
+        let totalShort = cookiejar!.shortbreadCookies!.count
+        let totalChocolate = cookiejar!.chocolateChipCookies!.count
+        let total = totalGinger + totalShort + totalChocolate
+        gingerbreadCookies.text = "Gingerbread cookies: \(totalGinger)"
+        shortbreadCookies.text = "Shortbread cookies: \(totalShort)"
+        chocolateChipCookies.text = "Chocolate chip cookies: \(totalChocolate)"
+        totalCookies.text = "Total cookies: \(total)"
     }
 
 }
